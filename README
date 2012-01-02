@@ -1,0 +1,9 @@
+
+
+This software is relased under the GPL v3.0 licence.  See LICENSE for more
+details.
+
+This software is built from the frustration of having to maintain multiple
+ssh keys for multiple employees on multiple accounts so I have opted to
+refine the process (especially for key rotation).
+

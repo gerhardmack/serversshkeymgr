@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# We do this so that we can support the newer compilor check flags 
+# without breaking the build on older gcc versions
+# 	-Gerhard
+
+major=`echo __GNUC__ | $1 -E - | tail -n 1`
+minor=`echo __GNUC_MINOR__ | $1 -E - | tail -n 1`
+	
+gccver=`printf "%02d%03d\\n" $major $minor`
+
+if [ "$gccver" = "__GNUC__" ]
+then
+	echo "-UNSUPPORTED_COMPILOR_USE_GCC"
+	exit ;
+fi
+
+if [ "$gccver" -lt 03000 ]
+then
+	echo "-UNSUPPORTED_GCC_VERSION_USE_3.0_OR_NEWER"
+	exit ;
+fi 
+	
+echo -n "-pedantic -Wall -Wpointer-arith -Wmissing-prototypes -Wmissing-declarations -Wredundant-decls -Wnested-externs -Wshadow -Wwrite-strings -Wformat=2 -Wcast-qual -Wunused -Werror-implicit-function-declaration -Wparentheses -Wbad-function-cast -Wcast-align -Wno-endif-labels"
+echo -n " "
+echo -n "-std=c99 -Wsequence-point -Wnonnull -Wswitch-default -Wswitch-enum -Wno-endif-labels"
+
+if [ "$gccver" -ge 04000 ]
+then
+	echo -n " "
+	echo -n "-Wmissing-field-initializers -Winit-self -Wextra -Wstrict-aliasing=2 -Wdeclaration-after-statement -Wunsafe-loop-optimizations"
+fi
+echo " "

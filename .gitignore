@@ -1,0 +1,6 @@
+*.bak
+*~
+installer
+loader
+Config.options
+keymgr
