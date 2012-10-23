@@ -4,3 +4,6 @@ installer
 loader
 Config.options
 keymgr
+*.o
+*.d
+obj/
